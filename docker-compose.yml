@@ -1,0 +1,51 @@
+version: '3.5'
+
+services:
+  server:
+    build:
+      context: '.'
+      args:
+        uid: ${UID}
+      dockerfile: server/Dockerfile
+    container_name: server
+    environment:
+      - APACHE_RUN_USER=#${UID}
+      - APACHE_RUN_GROUP=#${UID}
+    volumes:
+      - .:/var/www/html
+    ports:
+      - ${SERVER_PORT_LOCAL}:${SERVER_PORT_DOCKER}
+    networks:
+      backend:
+        aliases:
+          - server
+  client:
+    build:
+      context: '.'
+      dockerfile: client/Dockerfile
+    container_name: client
+    entrypoint: sh client_entrypoint.sh
+    working_dir: /home/node
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/home/node
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - ./run/var:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - ${MYSQL_PORTS_LOCAL}:${MYSQL_PORTS_DOCKER}
+    networks:
+      backend:
+        aliases:
+          - database
+networks:
+  backend:
+    name: backend-network
