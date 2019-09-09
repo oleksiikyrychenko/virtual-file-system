@@ -1,31 +1,43 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
+import logo from '../../assets/icons/logo.png';
 
 const Styles = styled.div`
 display: flex;
 justify-content: space-between;
 align-items: center;
 height: 80px;
-padding: 0 50px;
-background: #000;
+background: transparent;
+position: absolute;
+top: 0;
+width: 100%;
 .logo {
-    p{
-        color: #fff;
-        font-size: 45px;
+    margin-left: 80px;
+    .logo-img {
+        width: 70px;
+        height: 44px;
     }
 }
 .links{
     list-style: none;
     display: flex;
-    .signIn {
-        margin-right: 30px;
-        padding: 10px 0;
+    margin-right: 80px;
+    .signIn, .signUp, .home {
+        p {
+            color: #41413F;
+            font-family: 'Blogger Sans';
+            font-size: 17px;
+            text-transform: uppercase;
+            border-bottom: 2px solid transparent;
+            transition: all .3s ease-in;
+            &:hover {
+                border-bottom: 2px solid #41413F;
+            }
+        }
     }
-    .signUp {
-        background-color: #FFF;
-        padding: 10px 30px;
-        border-radius: 24px;
+    .signIn, .signUp {
+        margin-left: 32px;
     }
 }
 `;
@@ -33,6 +45,7 @@ background: #000;
 class Header extends Component{
     render() {
         const links = [
+            { src: '/', title: 'Home', class: "home"},
             { src: '/login', title: 'Sign In', class: "signIn"},
             { src: '/register', title: 'Sign Up', class: 'signUp'}
         ];
@@ -41,12 +54,12 @@ class Header extends Component{
             <Styles>
                 <div className={'logo'}>
                     <Link to={'/'}>
-                        <p>VFS</p>
+                        <img src={logo} className={'logo-img'} alt={'logo'}/>
                     </Link>
                 </div>
                 <ul className={'links'}>
-                    {links.map(link => (
-                        <li className={link.class}>
+                    {links.map((link, index) => (
+                        <li className={link.class} key={index}>
                             <Link to={`${link.src}`}>
                                 <p>{link.title}</p>
                             </Link>

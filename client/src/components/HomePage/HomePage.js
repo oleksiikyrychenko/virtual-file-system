@@ -5,18 +5,34 @@ import {login} from '../../store/auth/actions';
 import AppLayout from "../../layout/AppLayout";
 
 class HomePage extends Component{
-
-    onSubmit = (values) => {
-        this.props.login(values);
-    };
-
     render() {
-
+        const paragraphs = [
+            'convenience',
+            'speed',
+            'advantage'
+        ];
 
         return (
             <AppLayout>
                  <Styles>
-                     <h1>HomePage</h1>
+                     <div className={'wrapper'}>
+                      <div className={'text-block'}>
+                            All your important files in one place
+                      </div>
+                     </div>
+                     <div className={'description-block'}>
+                         <p className={'description'}>do you want to have permanent access to your files?</p>
+                         <p className={'description indent'}>then our file system is what you need</p>
+                         <div className={'paragraphs-block'}>
+                             {
+                                 paragraphs.map((paragraph, index) => (
+                                     <div className={'single-paragraph'} key={index}>
+                                         {paragraph}
+                                     </div>
+                                 ))
+                             }
+                         </div>
+                     </div>
                  </Styles>
             </AppLayout>
         )

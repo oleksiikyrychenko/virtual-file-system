@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const StyledContent = styled.div`
-      .content-wrapper{
-        width: 100%;        
-        height: calc(100% - 80px);
-        display: flex;
-      }
+.content-wrapper{
+    width: 100%;        
+    display: flex;
+}
 `;
 
 class Content extends Component {
