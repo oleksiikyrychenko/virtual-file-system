@@ -63,7 +63,7 @@ export const copyFolder = (id, folderId) => ({
         method: 'PUT',
         url: `/folder/copy/${id}`,
         data: {
-            parent_id: folderId
+            folder_id: folderId
         }
     }
 });
