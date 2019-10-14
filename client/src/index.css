@@ -23,6 +23,16 @@
   src: url("assets/fonts/Bloggersansbold.woff") format("woff");
 }
 
+@font-face {
+  font-family: 'Blogger Sans Light';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/Bloggersanslight.woff") format("woff");
+}
+* {
+  font-variant: initial;
+}
 body {
   margin: 0;
   font-family:'Blogger Sans', sans-serif, -apple-system;

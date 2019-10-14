@@ -6,11 +6,15 @@ import thunkMiddleware from "redux-thunk";
 import saga from './saga'
 
 import auth from '../store/auth/reducer'
+import folders from '../store/folders/reducer'
+import files from '../store/files/reducer'
 
 const loggerMiddleware = createLogger();
 
 const rootReducer = combineReducers({
-    auth
+    auth,
+    folders,
+    files
 });
 
 const sagaMiddleware = createSagaMiddleware();

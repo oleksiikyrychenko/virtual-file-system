@@ -3,6 +3,8 @@ import {
     AUTH_LOGIN,
     AUTH_REGISTER,
     SIGN_OUT,
+    GET_AUTH_USER,
+    UPDATE_USER
 } from './actions';
 import { STATE_STATUSES } from "../../utils/stateStatuses";
 import { axiosController } from "../../utils/axiosController";
@@ -20,6 +22,8 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case AUTH_LOGIN:
+        case UPDATE_USER:
+        case GET_AUTH_USER:
         case AUTH_REGISTER: {
             return processReducer(state);
         }
@@ -41,7 +45,26 @@ export default (state = initialState, action) => {
             };
         }
 
+        case success(UPDATE_USER): {
+            return {
+                ...state,
+                user: action.data.data,
+                status: STATE_STATUSES.SUCCESS,
+            };
+        }
+
+        case success(GET_AUTH_USER): {
+            return {
+                ...state,
+                user: action.data.data,
+                isAuthenticated: true,
+                status: STATE_STATUSES.SUCCESS,
+            };
+        }
+
+        case error(UPDATE_USER):
         case error(AUTH_REGISTER):
+        case error(GET_AUTH_USER):
         case error(AUTH_LOGIN): {
             return errorReducer(action, state);
         }

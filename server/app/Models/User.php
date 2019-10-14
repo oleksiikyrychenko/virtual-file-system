@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 
 /**
- * @property File avatar
  * @property integer id
  * @property string first_name
  * @property string last_name
@@ -50,11 +49,9 @@ class User extends Authenticatable
 
     protected $appends = [
         'full_name',
-        'avatar_url'
     ];
 
     protected $with = [
-        'avatar'
     ];
 
     /**
@@ -69,33 +66,6 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
-    }
-
-    public function getAvatarUrlAttribute()
-    {
-        if($this->avatar){
-            return env('APP_URL') . '/files/'.$this->avatar->filename;
-        }
-
-        return null;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function avatar()
-    {
-        return $this->hasOne( File::class);
-    }
-
-    public function card()
-    {
-        return $this->hasMany( Card::class, 'id', 'user_id');
-    }
-
-    public function removeAvatar()
-    {
-        $this->avatar->delete();
     }
 
     public static function confirmationUser($code)

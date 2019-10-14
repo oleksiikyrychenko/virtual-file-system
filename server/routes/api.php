@@ -18,5 +18,21 @@ Route::group(['namespace' => 'Api'], function() {
 
     Route::middleware('auth:api')->group(function (){
         Route::apiResource('user', 'UserController');
+
+        Route::get('/folder', 'FolderController@index');
+        Route::get('folder/{folderId}', 'FolderController@show');
+        Route::post('/folder', 'FolderController@store');
+        Route::put('folder/{folderId}', 'FolderController@update');
+        Route::put('folder/cut/{folderId}', 'FolderController@cutFolder');
+        Route::delete('folder/{folderId}', 'FolderController@destroy');
+        Route::put('folder/copy/{folderId}', 'FolderController@copyFolder');
+
+        Route::get('tree', 'FolderController@tree');
+
+        Route::post('/file', 'FileController@store');
+        Route::put('file/{folderId}', 'FileController@update');
+        Route::delete('file/{fileId}', 'FileController@destroy');
+        Route::put('file/copy/{fileId}', 'FileController@copyFile');
+        Route::post('file/create', 'FileController@createFile');
     });
 });

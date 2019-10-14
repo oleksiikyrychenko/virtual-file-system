@@ -3,6 +3,7 @@ import { RESOURCE_BASE } from "../config/config";
 
 class AxiosController {
     setBaseUrl = () => axios.defaults.baseURL = RESOURCE_BASE + '/api';
+    getAxiosInstace = () => axios;
     setAuthHeader = (token) => {
         if(token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -14,7 +15,7 @@ class AxiosController {
 
     deleteToken = () => {
         localStorage.removeItem('token');
-        this.setAuthHeader(false)
+        this.setAuthHeader(null)
     };
 
     saveToken = token => {

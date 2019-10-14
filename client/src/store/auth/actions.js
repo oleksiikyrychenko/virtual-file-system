@@ -21,3 +21,22 @@ export const register = data => ({
         data
     }
 });
+
+export const GET_AUTH_USER = 'GET_AUTH_USER';
+export const getAuthUser = () => ({
+    type: GET_AUTH_USER,
+    request: {
+        method: 'GET',
+        url: '/user/me'
+    }
+});
+
+export const UPDATE_USER = 'UPDATE_USER';
+export const updateUser = (data) => ({
+    type: UPDATE_USER,
+    request: {
+        method: 'PUT',
+        url: '/user/me',
+        data
+    }
+});

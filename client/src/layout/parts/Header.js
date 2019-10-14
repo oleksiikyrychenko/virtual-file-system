@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from '../../assets/icons/logo.png';
+import {connect} from "react-redux";
 
 const Styles = styled.div`
 display: flex;
@@ -23,33 +24,46 @@ width: 100%;
     list-style: none;
     display: flex;
     margin-right: 80px;
-    .signIn, .signUp, .home {
-        p {
-            color: #41413F;
-            font-family: 'Blogger Sans';
-            font-size: 17px;
-            text-transform: uppercase;
-            border-bottom: 2px solid transparent;
-            transition: all .3s ease-in;
-            &:hover {
-                border-bottom: 2px solid #41413F;
-            }
-        }
+    li{
+        margin-left:  32px;
     }
-    .signIn, .signUp {
-        margin-left: 32px;
+    .link {
+        color: #41413F;
+        font-family: 'Blogger Sans';
+        font-size: 17px;
+        text-transform: uppercase;
+        border-bottom: 2px solid transparent;
+        transition: all .3s ease-in;
+        &:hover {
+            border-bottom: 2px solid #41413F;
+        }
     }
 }
 `;
 
 class Header extends Component{
-    render() {
-        const links = [
+
+    getLinks = () => {
+        const { isAuthenticated } = this.props;
+        let defaultLinks = [
             { src: '/', title: 'Home', class: "home"},
             { src: '/login', title: 'Sign In', class: "signIn"},
             { src: '/register', title: 'Sign Up', class: 'signUp'}
         ];
 
+        if(isAuthenticated){
+            defaultLinks = [
+                { src: '/', title: 'Home', class: "home"},
+                { src: '/profile', title: 'Profile', class: "profile"},
+                { src: '/dashboard', title: 'Dashboard', class: "dashboard"},
+                { src: '/signOut', title: 'Sign Out', class: 'signOut', handler: () => console.log('work')}
+            ];
+        }
+
+        return defaultLinks;
+    };
+
+    render() {
         return(
             <Styles>
                 <div className={'logo'}>
@@ -58,10 +72,10 @@ class Header extends Component{
                     </Link>
                 </div>
                 <ul className={'links'}>
-                    {links.map((link, index) => (
-                        <li className={link.class} key={index}>
+                    {this.getLinks().map((link, index) => (
+                        <li key={index}>
                             <Link to={`${link.src}`}>
-                                <p>{link.title}</p>
+                                <p className={`link ${link.class}`}>{link.title}</p>
                             </Link>
                         </li>
                     ))}
@@ -71,4 +85,9 @@ class Header extends Component{
     }
 }
 
-export default withRouter(Header);
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+
+export default connect(mapStateToProps, null)(Header);
