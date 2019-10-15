@@ -4,6 +4,7 @@ import {register} from '../../store/auth/actions';
 import Styles from "../Login/styles";
 import AuthorizationForm from "../forms/AuthorizationForm";
 import * as yup from 'yup';
+import Alert from "react-s-alert";
 
 const validationSchema = yup.object().shape({
     firstName: yup.string().required('First name is required!'),
@@ -26,7 +27,8 @@ class Register extends Component{
             email,
             password
         };
-        register(data);
+        register(data)
+            .then(() => Alert.success('Registration is successful.Confirm your email, please'));
     };
 
     render() {
