@@ -59,7 +59,7 @@ class CreateFolderForm extends Component {
             title: newFolder,
             user_id: user.id
         };
-        await createFolder(data);
+        await createFolder(data).catch((e) => Alert.error(e.error.response.data.message) );
         rest.resetForm({newFolder: ''});
     };
 

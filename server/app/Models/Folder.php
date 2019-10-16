@@ -90,6 +90,25 @@ class Folder extends Model
         return true;
     }
 
+    public function isNameExits($data)
+    {
+        if(empty($data['parent_id'])){
+            $currentFolder = $this->getRootFoldersByUserId($data['user_id']);
+            $parentFolder = $currentFolder;
+        } else {
+            $currentFolder = $this->getFolderById($data['parent_id']);
+            $parentFolder = $currentFolder->child;
+        }
+
+        foreach ($parentFolder as $folder){
+            if($folder->title === $data['title']){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function isChildExits($id, $folder_id)
     {
         $folder = $this->getFolderById($id);

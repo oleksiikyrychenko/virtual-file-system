@@ -42,6 +42,9 @@ class FolderController extends Controller
     {
         $data = $request->only('parent_id', 'title', 'user_id');
         $folder = new Folder();
+        if($folder->isNameExits($data)){
+            return $this->invalidData('The folder name is exits already');
+        }
         $folder->fill($data);
         if($folder->save()){
             return $this->successApiResponse(['folder' => $folder]);
